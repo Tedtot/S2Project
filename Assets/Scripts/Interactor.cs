@@ -39,10 +39,12 @@ public class Interactor : MonoBehaviour
             if (interactable != null) {
                 startInteraction(interactable);
 
+                //Current cant have this because SHOPNPCs uses this too
+                
                 //Changes gridlayout size based on size of chest
-                int invSize = gObject.GetComponent<ChestInventory>().InvSize;
-                GameObject di = GameObject.Find("DynamicInventory");
-                GridLayoutGroup glg = di.GetComponent<GridLayoutGroup>();
+                //int invSize = gObject.GetComponent<ChestInventory>().InvSize;
+                //GameObject di = GameObject.Find("DynamicInventory");
+                //GridLayoutGroup glg = di.GetComponent<GridLayoutGroup>();
                 /*if (invSize % 2 == 0) {
                     glg.constraintCount = 4;
                     di.transform.position = new Vector2(541, di.transform.position.y);

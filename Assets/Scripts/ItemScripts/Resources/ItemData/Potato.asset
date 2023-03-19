@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a6b06462ac6d34a8dde1436db9478b, type: 3}
+  m_Script: {fileID: 11500000, guid: 786e765a6eb86ad47991ab3d29819639, type: 3}
   m_Name: Potato
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 2
   DisplayName: Potato
-  MaxStackSize: 2
+  MaxStackSize: 5
+  Gold: 1
   Icon: {fileID: -1724265642, guid: 23fe89a27fbf2a64bb888b818f6345b5, type: 3}
   ItemPrefab: {fileID: 2697254675199956224, guid: 8f80d52c64c5b374b83811d70b46c486, type: 3}

@@ -7,11 +7,11 @@ using UnityEditor;
 [CreateAssetMenu(menuName = "Inventory System/Item Database")]
 public class Database : ScriptableObject
 {
-    [SerializeField] private List<InvItemData> itemDatabase; //List of all items
+    [SerializeField] private List<InventoryItemData> itemDatabase; //List of all items
     [ContextMenu("Set IDs")]
     public void setItemIDs() {
-        itemDatabase = new List<InvItemData>();
-        var foundItems = Resources.LoadAll<InvItemData>("ItemData").OrderBy(i => i.ID).ToList(); //i: item
+        itemDatabase = new List<InventoryItemData>();
+        var foundItems = Resources.LoadAll<InventoryItemData>("ItemData").OrderBy(i => i.ID).ToList(); //i: item
 
         var hasIDInRange = foundItems.Where(i => i.ID != -1 && i.ID < foundItems.Count).OrderBy(i => i.ID).ToList();
         var hasIDNotInRange = foundItems.Where(i => i.ID != -1 && i.ID >= foundItems.Count).OrderBy(i => i.ID).ToList();
@@ -19,7 +19,7 @@ public class Database : ScriptableObject
 
         var index = 0;
         for (int i = 0; i < foundItems.Count; i++) {
-            InvItemData itemToAdd;
+            InventoryItemData itemToAdd;
             itemToAdd = hasIDInRange.Find(d => d.ID == i);
 
             if (itemToAdd != null) {
@@ -47,7 +47,7 @@ public class Database : ScriptableObject
 #endif
     }
 
-    public InvItemData getItem(int id) {
+    public InventoryItemData getItem(int id) {
         return itemDatabase.Find(i => i.ID == id);
     }
 }

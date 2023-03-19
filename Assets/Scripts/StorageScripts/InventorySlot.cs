@@ -4,16 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class InventorySlot : ISerializationCallbackReceiver
+public class InventorySlot : ItemSlot
 {
-    [NonSerialized] private InvItemData itemData;
-    [SerializeField] private int itemID = -1;
-    [SerializeField] private int stackSize;
-
-    public InvItemData ItemData => itemData;
-    public int StackSize => stackSize;
-
-    public InventorySlot(InvItemData source, int amount) {
+    public InventorySlot(InventoryItemData source, int amount) {
         itemData = source;
         itemID = itemData.ID;
         stackSize = amount;
@@ -21,21 +14,7 @@ public class InventorySlot : ISerializationCallbackReceiver
     public InventorySlot() {
         clearSlot();
     }
-    public void clearSlot() {
-        itemData = null;
-        itemID = -1;
-        stackSize = -1;
-    }
-    public void assignItem(InventorySlot invSlot) {
-        if (itemData == invSlot.ItemData) addToStack(invSlot.stackSize);
-        else {
-            itemData = invSlot.itemData;
-            itemID = itemData.ID;
-            stackSize = 0;
-            addToStack(invSlot.stackSize);
-        }
-    }
-    public void updateInventorySlot(InvItemData data, int amount) {
+    public void updateInventorySlot(InventoryItemData data, int amount) {
         itemData = data;
         itemID = data.ID;
         stackSize = amount;
@@ -48,13 +27,6 @@ public class InventorySlot : ISerializationCallbackReceiver
         if (stackSize + amountToAdd <= itemData.MaxStackSize) return true;
         else return false;
     }
-    public void addToStack(int amount) {
-        stackSize += amount;
-    }
-    public void removeFromStack(int amount) {
-        stackSize -= amount;
-    }
-
     public bool splitStack(out InventorySlot splitStack) {
         if (stackSize <= 1) {
             splitStack = null;
@@ -66,16 +38,5 @@ public class InventorySlot : ISerializationCallbackReceiver
 
         splitStack = new InventorySlot(itemData, halfStack);
         return true;
-    }
-
-    public void OnBeforeSerialize() {
-        //Nothing
-    }
-
-    public void OnAfterDeserialize() {
-        if (itemID == -1) return;
-        
-        var db = Resources.Load<Database>("Database");
-        itemData = db.getItem(itemID);    
     }
 }

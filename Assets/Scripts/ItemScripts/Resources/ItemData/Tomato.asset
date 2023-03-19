@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88a6b06462ac6d34a8dde1436db9478b, type: 3}
+  m_Script: {fileID: 11500000, guid: 786e765a6eb86ad47991ab3d29819639, type: 3}
   m_Name: Tomato
   m_EditorClassIdentifier: 
-  ID: 2
+  ID: 3
   DisplayName: Tomato
-  MaxStackSize: 2
+  MaxStackSize: 5
+  Gold: 10
   Icon: {fileID: -697728493, guid: 23fe89a27fbf2a64bb888b818f6345b5, type: 3}
   ItemPrefab: {fileID: 2905145651152370312, guid: e28da9f8310265842adb7feeac1356d7, type: 3}

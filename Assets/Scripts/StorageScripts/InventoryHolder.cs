@@ -9,6 +9,8 @@ public abstract class InventoryHolder : MonoBehaviour
     [SerializeField] private int invSize;
     [SerializeField] protected InventorySystem primaryInvSystem;
     [SerializeField] protected int offset = 9;
+    [SerializeField] protected int gold;
+
     public int Offset => offset;
     public int InvSize => invSize;
     public InventorySystem PrimaryInvSystem => primaryInvSystem; 
@@ -16,8 +18,9 @@ public abstract class InventoryHolder : MonoBehaviour
 
     protected virtual void Awake() {
         SaveLoad.OnLoadGame += loadInventory;
-        primaryInvSystem = new InventorySystem(invSize);
+        primaryInvSystem = new InventorySystem(invSize, gold);
     }
+    
     protected abstract void loadInventory(SaveData data);
 }
 

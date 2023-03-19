@@ -18,6 +18,7 @@ public class UniqueID : MonoBehaviour
     private void OnDestroy() {
         if(idDatabase.ContainsKey(id)) idDatabase.Remove(id);
     }
+    [ContextMenu("Generate ID")]
     private void generate() {
         id = Guid.NewGuid().ToString();
         idDatabase.Add(id, this.gameObject);

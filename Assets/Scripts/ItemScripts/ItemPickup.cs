@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class ItemPickup : MonoBehaviour//, IPointerClickHandler
 {
     //public float pickupRadius = 1f;
-    public InvItemData itemData;
+    public InventoryItemData itemData;
 
     private BoxCollider2D collider;
 
@@ -59,11 +59,11 @@ public class ItemPickup : MonoBehaviour//, IPointerClickHandler
 [System.Serializable]
 public struct itemPickupSaveData
 {
-    public InvItemData itemData;
+    public InventoryItemData itemData;
     public Vector3 position;
     public Quaternion rotation;
 
-    public itemPickupSaveData(InvItemData data, Vector3 position, Quaternion rotation) {
+    public itemPickupSaveData(InventoryItemData data, Vector3 position, Quaternion rotation) {
         this.itemData = data;
         this.position = position;
         this.rotation = rotation;

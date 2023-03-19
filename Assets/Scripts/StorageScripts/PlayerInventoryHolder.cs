@@ -20,7 +20,7 @@ public class PlayerInventoryHolder : InventoryHolder
     void Update() {
         if (Keyboard.current.spaceKey.wasPressedThisFrame) OnPlayerInventoryDisplayRequested?.Invoke(primaryInvSystem, 9);
     }
-    public bool addToInventory(InvItemData data, int amount) {
+    public bool addToInventory(InventoryItemData data, int amount) {
         if (primaryInvSystem.addToInventory(data, amount)) {
             return true;
         }
