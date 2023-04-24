@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using TMPro;
+
 public class PlayerInventoryHolder : InventoryHolder
 {
     public static UnityAction OnPlayerInventoryChanged;
@@ -10,16 +12,21 @@ public class PlayerInventoryHolder : InventoryHolder
     private void Start() {
         SaveGameManager.data.playerInventory = new invSaveData(primaryInvSystem);
     }
+
     protected override void loadInventory(SaveData data) {
         //Check save data for specific data and loads it
         if (data.playerInventory.InvSystem != null) {
             this.primaryInvSystem = data.playerInventory.InvSystem;
             OnPlayerInventoryChanged?.Invoke();
+        
+            GameObject.Find("PlayerGold").GetComponent<TextMeshProUGUI>().text = this.PrimaryInvSystem.Gold.ToString() + " G";
         }
     }
+
     void Update() {
         if (Keyboard.current.spaceKey.wasPressedThisFrame) OnPlayerInventoryDisplayRequested?.Invoke(primaryInvSystem, 9);
     }
+
     public bool addToInventory(InventoryItemData data, int amount) {
         if (primaryInvSystem.addToInventory(data, amount)) {
             return true;

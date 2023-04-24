@@ -1,7 +1,9 @@
 using UnityEngine;
 using System;
 using TMPro;
+using System.Collections.Generic;
 
+[RequireComponent(typeof(UniqueID))]
 public class TimeSystem : MonoBehaviour
 {
     private TextMeshProUGUI timeText;
@@ -10,15 +12,36 @@ public class TimeSystem : MonoBehaviour
     public Action minuteChanged;
     public Action hourChanged;
 
-    private int minute;
-    private int hour;
+    [SerializeField] private int minute;
+    [SerializeField] private int hour;
     private bool meridiem; //am pm
     private string timeOfDay;
 
-    private float minuteToReal = 1f;
+    private float minuteToReal = 0.5f;
     private float timer;
 
+    private TimeSaveData timeSaveData;
+    private string id;
+
+    private void Awake() {
+        SaveLoad.OnLoadGame += loadTime;
+        timeSaveData = new TimeSaveData(new int[] {12, 0}, meridiem, timeOfDay);
+    }
+
+    private void loadTime(SaveData data) {
+        //Check save data for specific data and loads it
+        if (data.TimeSaveData.Time != null) {
+            Debug.Log("load time");
+            hour = data.TimeSaveData.Time[0];
+            minute = data.TimeSaveData.Time[1];
+            meridiem = data.TimeSaveData.Meridiem;
+            timeOfDay = data.TimeSaveData.TimeOfDay;
+        }
+    }
     void Start() {
+        id = GetComponent<UniqueID>().ID;
+        SaveGameManager.data.TimeSaveData = new TimeSaveData(new int[] {12, 0}, meridiem, timeOfDay);
+
         timeText = GameObject.Find("Time").GetComponent<TextMeshProUGUI>();
         todText = GameObject.Find("TimeOfDay").GetComponent<TextMeshProUGUI>();
 
@@ -53,11 +76,17 @@ public class TimeSystem : MonoBehaviour
     private void OnEnable() {
         minuteChanged += UpdateTime;
         hourChanged += UpdateTime;
+
+        SaveLoad.OnLoadGame += loadTime;
+
     }
     private void OnDisable() {
         minuteChanged -= UpdateTime;
         hourChanged -= UpdateTime;
+
+        SaveLoad.OnLoadGame -= loadTime;
     }
+
     private void UpdateTime() {
         string t = " AM";
         if (meridiem) t = " PM";
@@ -82,7 +111,25 @@ public class TimeSystem : MonoBehaviour
         timeText.text = $"{hour:00}:{minute:00}" + t;
         todText.text = timeOfDay;
     }
+
     public int[] getTime() {
         return new int[] { hour, minute };
+    }
+
+    public void updateSaveData() {
+        SaveGameManager.data.TimeSaveData = new TimeSaveData(getTime(), meridiem, timeOfDay);
+    }
+}
+
+[System.Serializable]
+public struct TimeSaveData {
+    public int[] Time;
+    public bool Meridiem;
+    public string TimeOfDay;
+
+    public TimeSaveData(int[] time, bool meridiem, string timeOfDay) {
+        Time = time;
+        Meridiem = meridiem;
+        TimeOfDay = timeOfDay;
     }
 }

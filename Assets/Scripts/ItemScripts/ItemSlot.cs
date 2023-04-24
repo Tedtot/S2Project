@@ -16,6 +16,7 @@ public abstract class ItemSlot : ISerializationCallbackReceiver
         itemID = -1;
         stackSize = -1;
     }
+
     public void assignItem(InventorySlot invSlot) {
         if (itemData == invSlot.ItemData) addToStack(invSlot.stackSize);
         else {
@@ -25,6 +26,7 @@ public abstract class ItemSlot : ISerializationCallbackReceiver
             addToStack(invSlot.stackSize);
         }
     }
+
     public void assignItem(InventoryItemData data, int amount) {
         if (itemData == data) addToStack(amount);
         else {
@@ -34,11 +36,14 @@ public abstract class ItemSlot : ISerializationCallbackReceiver
             addToStack(amount);
         }
     }
+
     public void addToStack(int amount) {
         stackSize += amount;
     }
+
     public void removeFromStack(int amount) {
         stackSize -= amount;
+        if (stackSize <= 0) clearSlot();
     }
 
     public void OnAfterDeserialize()
@@ -46,7 +51,8 @@ public abstract class ItemSlot : ISerializationCallbackReceiver
         if (itemID == -1) return;
         
         var db = Resources.Load<Database>("Database");
-        itemData = db.getItem(itemID);        }
+        itemData = db.getItem(itemID);
+    }
 
     public void OnBeforeSerialize()
     {

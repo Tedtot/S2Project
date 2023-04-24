@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using TMPro;
 
 [System.Serializable]
 public class InventorySystem
@@ -79,7 +80,42 @@ public class InventorySystem
         return true;
     }
 
-    public void spendGold(int basketTotal) {
-        gold -= basketTotal;
+
+
+    public Dictionary<InventoryItemData, int> getAllItemsHeld() {
+        var distinctItems = new Dictionary<InventoryItemData, int>();
+
+        foreach (var item in invSlots) {
+            if (item.ItemData == null) continue;
+
+            if (!distinctItems.ContainsKey(item.ItemData)) distinctItems.Add(item.ItemData, item.StackSize);
+            else distinctItems[item.ItemData] += item.StackSize;
+        }
+        
+        return distinctItems;
+    }
+
+    public void loseGold(int amount) {
+        gold -= amount;
+    }
+
+    public void gainGold(int amount) {
+        gold += amount;
+    }
+
+    public void removeItemsFromInventory(InventoryItemData data, int amount) {
+        if (containsItem(data, out List<InventorySlot> invSlot)) {
+            foreach (var slot in invSlot) {
+                var stackSize = slot.StackSize;
+                
+                if (stackSize > amount) slot.removeFromStack(amount);
+                else {
+                    slot.removeFromStack(stackSize);
+                    amount -= stackSize;
+                }
+
+                onInventorySlotChanged?.Invoke(slot);
+            }
+        }
     }
 }

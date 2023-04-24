@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class SaveData
 {
-    public List<string> collectedItems;
-    public SerializableDictionary<string, itemPickupSaveData> activeItems;
-    public SerializableDictionary<string, invSaveData> chestDictionary;
+    public List<string> CollectedItems;
+    public SerializableDictionary<string, itemPickupSaveData> ActiveItems;
+    public SerializableDictionary<string, invSaveData> ChestDictionary;
+    public SerializableDictionary<string, ShopSaveData> ShopKeeperDictionary;
 
     public invSaveData playerInventory;
-    public SaveData() {
-        collectedItems = new List<string>();
-        activeItems = new SerializableDictionary<string, itemPickupSaveData>();
-        chestDictionary = new SerializableDictionary<string, invSaveData>();
-        playerInventory = new invSaveData();
-    }
+    public TimeSaveData TimeSaveData;
 
+    public SaveData() {
+        CollectedItems = new List<string>();
+        ActiveItems = new SerializableDictionary<string, itemPickupSaveData>();
+        ChestDictionary = new SerializableDictionary<string, invSaveData>();
+        playerInventory = new invSaveData();
+        ShopKeeperDictionary = new SerializableDictionary<string, ShopSaveData>();
+        TimeSaveData = new TimeSaveData();
+    }
 }

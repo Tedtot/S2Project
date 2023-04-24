@@ -14,7 +14,8 @@ public abstract class InventoryHolder : MonoBehaviour
     public int Offset => offset;
     public int InvSize => invSize;
     public InventorySystem PrimaryInvSystem => primaryInvSystem; 
-    public static UnityAction<InventorySystem, int> OnDynamicInvetoryDisplayRequested; //Inv system to display, amount to offset display by
+    public static UnityAction<InventorySystem, int> OnDynamicInventoryDisplayRequested; //Inv system to display, amount to offset display by
+    public static UnityAction OnDynamicInventoryDisplayRemoved;
 
     protected virtual void Awake() {
         SaveLoad.OnLoadGame += loadInventory;

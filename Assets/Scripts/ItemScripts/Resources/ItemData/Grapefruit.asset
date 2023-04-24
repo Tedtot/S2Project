@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786e765a6eb86ad47991ab3d29819639, type: 3}
+  m_Name: Grapefruit
+  m_EditorClassIdentifier: 
+  ID: 10
+  DisplayName: Grapefruit
+  MaxStackSize: 4
+  Gold: 24
+  Icon: {fileID: 21300000, guid: 1b54a0f0846d54e4d9a922261a8ddf19, type: 3}
+  ItemPrefab: {fileID: 2905145651152370312, guid: 33929989a9fc5ac40917fdff7e56f891, type: 3}
+  Description: A grapefruit

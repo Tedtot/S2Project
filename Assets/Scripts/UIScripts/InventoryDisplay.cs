@@ -14,6 +14,7 @@ public abstract class InventoryDisplay : MonoBehaviour
     protected virtual void Start() {
 
     }
+
     public abstract void assignSlot(InventorySystem invToDisplay, int offset);
 
     protected virtual void updateSlot(InventorySlot updatedSlot) {

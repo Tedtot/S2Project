@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786e765a6eb86ad47991ab3d29819639, type: 3}
+  m_Name: Guava
+  m_EditorClassIdentifier: 
+  ID: 12
+  DisplayName: Guava
+  MaxStackSize: 6
+  Gold: 22
+  Icon: {fileID: 21300000, guid: 6b2b4e91b3f48f84f960c211bcf08906, type: 3}
+  ItemPrefab: {fileID: 2905145651152370312, guid: 84806c1c7dd2d1241b0d7bebba7b79fa, type: 3}
+  Description: A guava

@@ -34,6 +34,7 @@ public class ShopSystem
     public void addToShop(InventoryItemData data, int amount) {
         if (containsItem(data, out ShopSlot shopSlot)) {
             shopSlot.addToStack(amount);
+            return;
         }
         var freeSlot = getFreeSlot();
         freeSlot.assignItem(data, amount);
@@ -53,13 +54,22 @@ public class ShopSystem
         return shopSlot != null;
     }
 
-    public void purchaseItem(InventoryItemData data, int amount) {
+    public void buyItem(InventoryItemData data, int amount) {
         if (!containsItem(data, out ShopSlot slot)) return;
 
         slot.removeFromStack(amount);
     }
 
+    public void sellItem(InventoryItemData data, int amount, int price) {
+        addToShop(data, amount);
+        reduceGold(price);
+    }
+
     public void gainGold(int basketTotal) {
         availableGold += basketTotal;
+    }
+
+    public void reduceGold(int price) {
+        availableGold -= price;
     }
 }

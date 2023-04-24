@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 targetPos;
     private Vector3 velocity;
 
+    private bool mainMenu;
 
     void Start() {
         player = GameObject.Find("Player");
@@ -22,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         rb = player.GetComponent<Rigidbody2D>();
 
         velocity = Vector3.zero;
+        mainMenu = true;
     }
 
     void Update() { 
@@ -30,11 +32,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void FixedUpdate() {
-        rb.velocity = movementDirection * playerSpeed;
+        if (!mainMenu) rb.velocity = movementDirection * playerSpeed;
     }
+
     private void LateUpdate() {
         camera.transform.position = Vector3.SmoothDamp(camera.transform.position, targetPos, ref velocity, 0.2f);
     }
 
+    public void mainMenuOpen(bool value) {
+        mainMenu = value;
+    }
 }
     

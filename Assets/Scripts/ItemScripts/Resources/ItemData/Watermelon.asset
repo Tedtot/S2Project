@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 786e765a6eb86ad47991ab3d29819639, type: 3}
+  m_Name: Watermelon
+  m_EditorClassIdentifier: 
+  ID: 25
+  DisplayName: Watermelon
+  MaxStackSize: 2
+  Gold: 28
+  Icon: {fileID: 21300000, guid: 322538c631b5bef4185fc1463e7bdfbd, type: 3}
+  ItemPrefab: {fileID: 2905145651152370312, guid: 50dafb776d9cfce4fa7d14316eff7404, type: 3}
+  Description: A watermelon

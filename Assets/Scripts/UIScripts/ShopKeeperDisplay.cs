@@ -53,6 +53,7 @@ public class ShopKeeperDisplay : MonoBehaviour
         }
 
         clearSlots();
+        clearItemPreview();
 
         basketTotalText.enabled = false;
         buyButton.gameObject.SetActive(false);
@@ -60,19 +61,33 @@ public class ShopKeeperDisplay : MonoBehaviour
         playerGoldText.text = $"Player Gold: {playerInvHolder.PrimaryInvSystem.Gold}";
         shopGoldText.text = $"Shop Gold: {shopSystem.AvailableGold}";
 
-        displayShopInventory();
+        
+        if (isSelling) displayPlayerInventory();
+        else displayShopInventory();
     }
 
     private void sellItems() {
+        if (shopSystem.AvailableGold < basketTotal) return;
+        
+        foreach (var kvp in shoppingCart) {
+            var price = getModifiedPrice(kvp.Key, kvp.Value, shopSystem.SellMarkup);
 
+            shopSystem.sellItem(kvp.Key, kvp.Value, price);
+
+            playerInvHolder.PrimaryInvSystem.gainGold(price);
+            updateGoldText();
+            playerInvHolder.PrimaryInvSystem.removeItemsFromInventory(kvp.Key, kvp.Value);
+        }
+
+        refreshDisplay();
     }
-
+ 
     private void buyItems() {
         if (playerInvHolder.PrimaryInvSystem.Gold < basketTotal) return;
         if (!playerInvHolder.PrimaryInvSystem.checkInventoryRemaining(shoppingCart)) return;
 
         foreach (var kvp in shoppingCart) {
-            shopSystem.purchaseItem(kvp.Key, kvp.Value);
+            shopSystem.buyItem(kvp.Key, kvp.Value);
 
             for (int i = 0; i < kvp.Value; i++) {
                 playerInvHolder.PrimaryInvSystem.addToInventory(kvp.Key, 1);
@@ -80,7 +95,8 @@ public class ShopKeeperDisplay : MonoBehaviour
         }
 
         shopSystem.gainGold(basketTotal);
-        playerInvHolder.PrimaryInvSystem.spendGold(basketTotal);
+        playerInvHolder.PrimaryInvSystem.loseGold(basketTotal);
+        updateGoldText();
 
         refreshDisplay();
     }
@@ -108,7 +124,13 @@ public class ShopKeeperDisplay : MonoBehaviour
     }
 
     private void displayPlayerInventory() {
-        
+        foreach (var item in playerInvHolder.PrimaryInvSystem.getAllItemsHeld()) {
+            var tempSlot = new ShopSlot();
+            tempSlot.assignItem(item.Key, item.Value);
+
+            var shopSlot = Instantiate(shopSlotPrefab, itemListContentPanel.transform);
+            shopSlot.initiate(tempSlot, shopSystem.SellMarkup);
+        }
     }
 
     public void removeItemFromCart(ShopSlotUI shopSlotUI) {
@@ -118,7 +140,7 @@ public class ShopKeeperDisplay : MonoBehaviour
         if (shoppingCart.ContainsKey(data)) {
             shoppingCart[data]--;
             var newString = $"{data.DisplayName} ({price}G) x{shoppingCart[data]}";
-            shoppingCartUI[data].setItemText(newString);
+            shoppingCartUI[data].setItemText(data.Icon, newString, (price * shoppingCart[data]).ToString());
 
             if (shoppingCart[data] <= 0) {
                 shoppingCart.Remove(data);
@@ -142,7 +164,10 @@ public class ShopKeeperDisplay : MonoBehaviour
     }
 
     private void clearItemPreview() {
-
+        itemPreviewSprite.sprite = null;
+        itemPreviewSprite.color = Color.clear;
+        itemPreviewName.text = "";
+        itemPreviewDescription.text = "";
     }
 
     public void addItemToCart(ShopSlotUI shopSlotUI) {
@@ -155,14 +180,14 @@ public class ShopKeeperDisplay : MonoBehaviour
         if (shoppingCart.ContainsKey(data)) {
             shoppingCart[data]++;
             var newString = $"{data.DisplayName} ({price}G) x{shoppingCart[data]}";
-            shoppingCartUI[data].setItemText(newString);
+            shoppingCartUI[data].setItemText(data.Icon, newString, (price * shoppingCart[data]).ToString());
         }
         else {
             shoppingCart.Add(data, 1);
             
             var shoppingCartTextObj = Instantiate(shoppingCartItemPrefab, shoppingCartContentPanel.transform);
             var newString = $"{data.DisplayName} ({price}G) x1";
-            shoppingCartTextObj.setItemText(newString);
+            shoppingCartTextObj.setItemText(data.Icon, newString, price.ToString());
             shoppingCartUI.Add(data, shoppingCartTextObj);
         }
 
@@ -190,10 +215,29 @@ public class ShopKeeperDisplay : MonoBehaviour
     public static int getModifiedPrice(InventoryItemData data, int amount, float markup) {
         var baseValue = data.Gold * amount;
 
-        return Mathf.RoundToInt(baseValue + baseValue * markup);
+        return Mathf.FloorToInt(baseValue + baseValue * markup);
     }
 
     private void updateItemPreview(ShopSlotUI shopSlotUI) {
+        var data = shopSlotUI.AssignedSlot.ItemData;
 
+        itemPreviewSprite.sprite = data.Icon;
+        itemPreviewSprite.color = Color.white;
+        itemPreviewName.text = data.DisplayName;
+        itemPreviewDescription.text = data.Description;
+    }
+    
+    public void onBuyTabPressed() {
+        isSelling = false;
+        refreshDisplay();
+    }
+        
+    public void onSellTabPressed() {
+        isSelling = true;
+        refreshDisplay();
+    }
+
+    private void updateGoldText() {
+        GameObject.Find("PlayerGold").GetComponent<TextMeshProUGUI>().text = playerInvHolder.PrimaryInvSystem.Gold.ToString() + " G";
     }
 }

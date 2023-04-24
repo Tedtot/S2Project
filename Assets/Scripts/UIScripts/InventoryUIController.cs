@@ -14,11 +14,13 @@ public class InventoryUIController : MonoBehaviour
         BackpackPanel.gameObject.SetActive(false);
     }
     private void OnEnable() {
-        InventoryHolder.OnDynamicInvetoryDisplayRequested += displayInventory;
+        InventoryHolder.OnDynamicInventoryDisplayRequested += displayInventory;
+        InventoryHolder.OnDynamicInventoryDisplayRemoved += hideInventory;
         PlayerInventoryHolder.OnPlayerInventoryDisplayRequested += displayPlayerInventory;
     }
     private void OnDisable() {
-        InventoryHolder.OnDynamicInvetoryDisplayRequested -= displayInventory;
+        InventoryHolder.OnDynamicInventoryDisplayRequested -= displayInventory;
+        InventoryHolder.OnDynamicInventoryDisplayRemoved -= hideInventory;
         PlayerInventoryHolder.OnPlayerInventoryDisplayRequested -= displayPlayerInventory;
     }
 
@@ -33,5 +35,8 @@ public class InventoryUIController : MonoBehaviour
     void displayPlayerInventory(InventorySystem invToDisplay, int offset) {
         BackpackPanel.gameObject.SetActive(true);
         BackpackPanel.refreshDynamicInventory(invToDisplay, offset);
+    }
+    void hideInventory() {
+        InvPanel.gameObject.SetActive(false);
     }
 }

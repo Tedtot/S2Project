@@ -9,16 +9,18 @@ using UnityEngine.InputSystem;
 public class ItemPickup : MonoBehaviour//, IPointerClickHandler
 {
     //public float pickupRadius = 1f;
-    public InventoryItemData itemData;
+    public InventoryItemData ItemData;
 
     private BoxCollider2D collider;
 
     [SerializeField] private itemPickupSaveData itemSaveData;
     private string id;
 
+    private QuestGiverDisplay questGiverDisplay;
+
     private void Awake() {
         SaveLoad.OnLoadGame += loadGame;
-        itemSaveData = new itemPickupSaveData(itemData, transform.position, transform.rotation);
+        itemSaveData = new itemPickupSaveData(ItemData, transform.position, transform.rotation);
 
         collider = GetComponent<BoxCollider2D>();
         collider.isTrigger = true;
@@ -26,13 +28,15 @@ public class ItemPickup : MonoBehaviour//, IPointerClickHandler
     }
     private void Start() {
         id = GetComponent<UniqueID>().ID;
-        SaveGameManager.data.activeItems.Add(id, itemSaveData);
+        SaveGameManager.data.ActiveItems.Add(id, itemSaveData);
+
+        questGiverDisplay = GameObject.Find("QuestController").GetComponent<QuestGiverDisplay>();
     }
     private void loadGame(SaveData data) {
-        if (data.collectedItems.Contains(id)) Destroy(this.gameObject);
+        if (data.CollectedItems.Contains(id)) Destroy(this.gameObject);
     }
     private void OnDestroy() {
-        if (SaveGameManager.data.activeItems.ContainsKey(id)) SaveGameManager.data.activeItems.Remove(id);
+        if (id != null && SaveGameManager.data.ActiveItems.ContainsKey(id)) SaveGameManager.data.ActiveItems.Remove(id);
         SaveLoad.OnLoadGame -= loadGame;
     }
     /*private void OnTriggerEnter2D(Collider2D collision) {
@@ -48,9 +52,18 @@ public class ItemPickup : MonoBehaviour//, IPointerClickHandler
         if (Vector3.Magnitude(player.transform.position - this.gameObject.transform.position) <= 2) {
             var inventory = player.transform.GetComponent<PlayerInventoryHolder>();
             if (!inventory) return;
-            if (inventory.addToInventory(itemData, 1)) {
-                SaveGameManager.data.collectedItems.Add(id);
+            if (inventory.addToInventory(ItemData, 1)) {
+                SaveGameManager.data.CollectedItems.Add(id);
                 Destroy(this.gameObject);
+
+                Quest questItems = questGiverDisplay.getQuestItems();
+                if (questGiverDisplay.ActiveQuest && questItems != null) {
+                    for (int i = 0; i < questItems.ItemData.Count; i++) {
+                        if (ItemData.DisplayName.Equals(questItems.ItemData[i].DisplayName)) {
+                            questGiverDisplay.updateQuestValue(i);
+                        }
+                    }
+                }
             }
         }  
     }

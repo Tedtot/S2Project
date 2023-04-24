@@ -9,16 +9,19 @@ public class SaveGameManager : MonoBehaviour
         data = new SaveData();
         SaveLoad.OnLoadGame += loadData;
     }
-    public void deleteData() {
+    public static void deleteData() {
         SaveLoad.deleteSaveData();
     }
+
     public static void saveData() {
         var saveData = data;
         SaveLoad.save(saveData);
     }
+
     public static void loadData(SaveData _data) {
         data = _data;
     }
+
     public static void tryLoadData() {
         SaveLoad.load();
     }

@@ -12,11 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f75afae8e8e7d9b4093d8d7d73555d63, type: 3}
   m_Name: DefaultShopList
   m_EditorClassIdentifier: 
-  items:
-  - ItemData: {fileID: 11400000, guid: 4e471c3d422985849ba9e6bb4efc5d88, type: 2}
-    Amount: 20
-  - ItemData: {fileID: 11400000, guid: c79f5c208ab36214e8c5363d6b9e504f, type: 2}
-    Amount: 15
+  items: []
   maxGold: 1000
   sellMarkup: 0.25
   buyMarkup: 0.5

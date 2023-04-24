@@ -29,6 +29,7 @@ public class DynamicInventoryDisplay : InventoryDisplay
     }
     private void clearSlots() {
         foreach (var item in transform.Cast<Transform>()) {
+            if (!(item.gameObject.tag.Equals("NoUse")))
             Destroy(item.gameObject); //Should use object pooling instead of destroying and instantiating the slots
         }
 

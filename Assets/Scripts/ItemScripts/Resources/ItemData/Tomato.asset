@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786e765a6eb86ad47991ab3d29819639, type: 3}
   m_Name: Tomato
   m_EditorClassIdentifier: 
-  ID: 3
+  ID: 24
   DisplayName: Tomato
-  MaxStackSize: 5
-  Gold: 10
+  MaxStackSize: 4
+  Gold: 20
   Icon: {fileID: -697728493, guid: 23fe89a27fbf2a64bb888b818f6345b5, type: 3}
   ItemPrefab: {fileID: 2905145651152370312, guid: e28da9f8310265842adb7feeac1356d7, type: 3}
+  Description: A tomato
+  PlaceItem: {fileID: 11400000, guid: e4cb9d801332a1741a0c4a7cac572d60, type: 2}

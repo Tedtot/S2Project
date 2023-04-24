@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 786e765a6eb86ad47991ab3d29819639, type: 3}
   m_Name: Pear
   m_EditorClassIdentifier: 
-  ID: 1
+  ID: 19
   DisplayName: Pear
-  MaxStackSize: 5
-  Gold: 50
-  Icon: {fileID: 0}
-  ItemPrefab: {fileID: 0}
+  MaxStackSize: 4
+  Gold: 18
+  Icon: {fileID: 21300000, guid: 40e5d579d4d91fb49af6782d90e28be0, type: 3}
+  ItemPrefab: {fileID: 2905145651152370312, guid: 4092bc85a5ef0e14f96acd2f721f5d4a, type: 3}
+  Description: A Pear

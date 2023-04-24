@@ -13,14 +13,16 @@ MonoBehaviour:
   m_Name: FoodShopList
   m_EditorClassIdentifier: 
   items:
-  - ItemData: {fileID: 11400000, guid: 4e471c3d422985849ba9e6bb4efc5d88, type: 2}
-    Amount: 99
-  - ItemData: {fileID: 11400000, guid: c79f5c208ab36214e8c5363d6b9e504f, type: 2}
-    Amount: 99
-  - ItemData: {fileID: 11400000, guid: de0970d477f33a948bac4f2ef23ae0c8, type: 2}
-    Amount: 99
-  - ItemData: {fileID: 11400000, guid: 0f1be950083e28b4ab49f4757241458d, type: 2}
-    Amount: 99
-  maxGold: 10000
+  - ItemData: {fileID: 11400000, guid: 448e8a927ff34ba46912e19ab66bef70, type: 2}
+    Amount: 50
+  - ItemData: {fileID: 11400000, guid: e542e8d489fc5d54bb59e480b7f68440, type: 2}
+    Amount: 20
+  - ItemData: {fileID: 11400000, guid: 3024cddb7c28e1342bb819109b723ffa, type: 2}
+    Amount: 20
+  - ItemData: {fileID: 11400000, guid: 9de89fbec28871b4d904fef9312cc485, type: 2}
+    Amount: 40
+  - ItemData: {fileID: 11400000, guid: 45fcc4b7b2b3bf742864082d5fcd1da5, type: 2}
+    Amount: 20
+  maxGold: 500
   sellMarkup: 0.25
   buyMarkup: 0.5
